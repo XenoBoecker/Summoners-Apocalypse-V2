@@ -1,0 +1,4 @@
+repository "Summoners Apocalypse V2@XenononeX@cloud"
+  path "/"
+    br "/main"
+    co "/main"

@@ -1,0 +1,58 @@
+{
+    "fighterData": {
+        "sprite": {
+            "instanceID": 0
+        },
+        "initiative": 25,
+        "maxHealth": 10,
+        "abilities": [
+            {
+                "abilityName": "Flame Burst",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 15,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Blazing Hops",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    3
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Scorching Bite",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    4
+                ],
+                "damage": 10,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Inferno Dash",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    1
+                ],
+                "damage": 20,
+                "targetCount": 1
+            }
+        ]
+    },
+    "fighterName": "Fiery rabbit",
+    "team": 0,
+    "health": 10
+}

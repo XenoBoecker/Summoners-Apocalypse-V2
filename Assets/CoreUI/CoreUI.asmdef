@@ -1,0 +1,17 @@
+{
+    "name": "CoreUI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5a4dcafc4ab2b2041a15ae6f3bde9422",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
