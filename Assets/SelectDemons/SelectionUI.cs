@@ -38,6 +38,12 @@ public class SelectionUI : MonoBehaviour
         ShowMyFighters();
     }
 
+    private void Update() //TODO weg damit
+    {
+
+        if (Input.GetKeyDown(KeyCode.Return)) OnConfirmSelection();
+    }
+
 
     void ShowSelectedFighters()
     {

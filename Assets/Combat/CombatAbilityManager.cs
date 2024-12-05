@@ -77,23 +77,23 @@ public class CombatAbilityManager : MonoBehaviour
             Debug.Log("add target");
             currentAbilityTargets.Add(fighter);
 
-            if (currentAbilityTargets.Count == selectedAbility.targetCount)
+            if (currentAbilityTargets.Count == selectedAbility.targetCount) //TODO: what if not enough targets are available?
             {
                 Debug.Log("now go");
                 OnAbilityTargetsSelected.Invoke();
 
-                UseAbility(selectedAbility, currentAbilityTargets);
+                ActivateAbilityEffect(selectedAbility, currentAbilityTargets);
             }
         }
     }
 
     internal void CastSelectedAbilityOnSelectedTargets()
     {
-        UseAbility(selectedAbility, currentAbilityTargets);
+        ActivateAbilityEffect(selectedAbility, currentAbilityTargets);
     }
 
 
-    public void UseAbility(Ability ability, List<Fighter> targets)
+    public void ActivateAbilityEffect(Ability ability, List<Fighter> targets)
     {
         Debug.Log("Use Ability: " + ability.abilityName);
         if (targets == null)

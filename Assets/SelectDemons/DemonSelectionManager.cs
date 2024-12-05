@@ -55,8 +55,19 @@ public class DemonSelectionManager : MonoBehaviour
     {
         if (isPvP)
         {
+            Debug.Log("PVP Save Selection");
 
-            playerProperties["PlayerSelectedDemons"] = selectedFighters.ToArray();
+
+            byte[] serializedData = Serialization.SerializeFighters(selectedFighters);
+            Debug.Log($"Serialized data size: {serializedData.Length} bytes");
+
+            // Photon limit check (manual threshold for safety)
+            if (serializedData.Length > 500 * 1024) // 500 KB
+            {
+                Debug.LogError("Serialized data size exceeds Photon property size limit!");
+            }
+
+            playerProperties["PlayerSelectedDemons"] = Serialization.SerializeFighters(selectedFighters);
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
         }

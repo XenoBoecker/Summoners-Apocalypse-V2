@@ -13,6 +13,9 @@ public static class SaveLoad
         CreateSaveFolder(savePath + "/" + fighter.ownerName);
 
         string json = JsonUtility.ToJson(fighter, true);
+
+        Debug.Log("Save fighter to " + savePath + "/" + fighter.ownerName + "/FighterFile" + fighter.fighterData.fighterID + ".json");
+
         File.WriteAllText(savePath + "/" + fighter.ownerName + "/FighterFile" + fighter.fighterData.fighterID + ".json", json);
     }
 
@@ -22,17 +25,73 @@ public static class SaveLoad
 
         Fighter fighter = JsonUtility.FromJson<Fighter>(json);
 
-        fighter.fighterData.sprite = LoadImageAsSprite(ownerName, fighter.fighterData.fighterID);
+        fighter.fighterData.sprite = LoadImageAsSprite(ownerName, fighterID);
         fighter.ownerName = ownerName; // if you move the fighters in the folders
 
         return fighter;
     }
 
-    public static List<Fighter> LoadMyFighters(string ownerName)
+    private static List<Fighter> GetBaseFighters()
     {
         List<Fighter> fighters = new List<Fighter>();
 
-        string[] fighterFiles = Directory.GetFiles(savePath + "/" + ownerName, "FighterFile*.json");
+        // Load all JSON files from Resources/Fighters
+        TextAsset[] jsonFiles = Resources.LoadAll<TextAsset>("Fighters");
+
+        if (jsonFiles.Length == 0)
+        {
+            Debug.LogError("No fighter data files found in Resources/Fighters.");
+            return fighters;
+        }
+
+        // Load all sprite files from Resources/Fighters
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Fighters");
+        Debug.Log($"Found {sprites.Length} sprites in Resources/Fighters.");
+
+        foreach (TextAsset jsonFile in jsonFiles)
+        {
+            try
+            {
+                // Deserialize JSON into Fighter object
+                Fighter fighter = JsonUtility.FromJson<Fighter>(jsonFile.text);
+
+                // Match the sprite for this fighter based on a naming convention
+                string spriteName = "FighterImage" + fighter.fighterData.fighterID; // Adjust based on your naming convention
+                Sprite matchedSprite = System.Array.Find(sprites, s => s.name == spriteName);
+
+                if (matchedSprite != null)
+                {
+                    fighter.fighterData.sprite = matchedSprite;
+                }
+                else
+                {
+                    Debug.LogWarning($"No sprite found for {fighter.fighterData.fighterID} (expected name: {spriteName}).");
+                }
+
+                fighters.Add(fighter);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to load fighter from file {jsonFile.name}: {ex.Message}");
+            }
+        }
+
+        Debug.Log($"Loaded {fighters.Count} fighters with sprites from Resources.");
+        return fighters;
+    }
+
+
+
+    public static List<Fighter> LoadMyFighters(string ownerName)
+    {
+        List<Fighter> fighters = GetBaseFighters();
+
+        string mySavePath = savePath + "/" + ownerName;
+
+        if (!System.IO.Directory.Exists(mySavePath)) return fighters;
+
+
+        string[] fighterFiles = Directory.GetFiles(mySavePath, "FighterFile*.json");
 
         foreach (string fighterFile in fighterFiles)
         {

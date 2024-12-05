@@ -1,0 +1,60 @@
+{
+    "fighterData": {
+        "fighterID": 3,
+        "sprite": {
+            "instanceID": 0
+        },
+        "initiative": 25,
+        "maxHealth": 10,
+        "abilities": [
+            {
+                "abilityName": "Ethereal Charge",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 15,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Haunting Gaze",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    1
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Spirit's Embrace",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    3
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Eerie Whisper",
+                "targetTypes": [
+                    3
+                ],
+                "specialEffects": [
+                    4
+                ],
+                "damage": 0,
+                "targetCount": 1
+            }
+        ]
+    },
+    "ownerName": "TestPlayer",
+    "fighterName": "Ghost of a Deer",
+    "team": 0,
+    "health": 10
+}

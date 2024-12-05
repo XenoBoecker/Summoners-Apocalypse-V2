@@ -1,0 +1,61 @@
+{
+    "fighterData": {
+        "fighterID": 5,
+        "sprite": {
+            "instanceID": -38666
+        },
+        "initiative": 7,
+        "maxHealth": 50,
+        "abilities": [
+            {
+                "abilityName": "Rainbow Blast",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 10,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Sparkling Shield",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    4
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Healing Hooves",
+                "targetTypes": [
+                    2
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Enchanted Gallop",
+                "targetTypes": [
+                    3
+                ],
+                "specialEffects": [
+                    1
+                ],
+                "damage": 0,
+                "targetCount": 1
+            }
+        ]
+    },
+    "ownerName": "y",
+    "fighterName": "Pink Unicorn",
+    "team": 0,
+    "health": 50,
+    "isDead": false
+}

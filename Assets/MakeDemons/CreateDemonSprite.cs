@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using SummonersApocalypse.MakeDemons;
+using System;
 
 namespace SummonersApocalypse.MakeDemons
 {
@@ -10,6 +11,8 @@ namespace SummonersApocalypse.MakeDemons
         public static string[] validSizes = new string[] { "256x256", "512x512", "1024x1024" };
         [HideInInspector] public int sizeIndex = 1;
 
+        public event Action OnSpriteCreated;
+
         public string Size
         {
             get { return validSizes[sizeIndex]; }
@@ -17,7 +20,7 @@ namespace SummonersApocalypse.MakeDemons
 
         private bool isRegenerating = false;
         
-        public void GenerateFighterSprite(FighterData fighterData, string prompt = "")
+        public void GenerateFighterSprite(FighterData fighterData, string ownerName, string prompt = "")
         {
             print("Check is regenerating: " + isRegenerating);
 
@@ -25,10 +28,10 @@ namespace SummonersApocalypse.MakeDemons
 
             print("Generating Fighter Sprite...");
 
-            LoadArt(fighterData, prompt);
+            LoadArt(fighterData, ownerName, prompt);
         }
 
-        private async void LoadArt(FighterData fighterData, string prompt = "")
+        private async void LoadArt(FighterData fighterData, string ownerName, string prompt = "")
         {
             string promptString = "A realistic, highly detailed, trending on artstation, living being\n";
             promptString += "which can be described as " + prompt + ". (this is the most important information about it)\n";
@@ -47,8 +50,8 @@ namespace SummonersApocalypse.MakeDemons
                 var imageResponse = await OpenAIAccessManager.RequestImageGeneration(promptString, 1, Size);
                 var url = imageResponse.urls[0];
                 Texture2D texture = await DownloadImage(url);
-
-                SaveLoad.SaveImage(texture, "TestPlayer", fighterData.fighterID);
+                
+                SaveLoad.SaveImage(texture, ownerName, fighterData.fighterID);
                 
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                 fighterData.sprite = sprite;
@@ -58,6 +61,8 @@ namespace SummonersApocalypse.MakeDemons
             {
                 print("Done generating sprite");
                 isRegenerating = false;
+
+                OnSpriteCreated.Invoke();
             }
         }
 

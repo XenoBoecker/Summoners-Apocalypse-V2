@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 namespace SummonersApocalypse.MakeDemons
 {
@@ -19,12 +20,14 @@ namespace SummonersApocalypse.MakeDemons
 
         int currentSavedFighterID;
 
+        Fighter lastGeneratedFighter;
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 
-                // TestLoadFighter();
+                TestLoadFighter();
             }
         }
 
@@ -54,7 +57,13 @@ namespace SummonersApocalypse.MakeDemons
 
         private void CreateDemonFromPromptResults(string result, string prompt)
         {
+
             string ownerName = "TestPlayer";
+
+
+            if (PhotonNetwork.IsConnected) ownerName = PhotonNetwork.LocalPlayer.NickName;
+
+
 
             FighterData fighterData = new FighterData(50, ParseDemonAbilities(result), UnityEngine.Random.Range(0,100), SaveLoad.GetNextFighterID(ownerName));
 
@@ -64,15 +73,38 @@ namespace SummonersApocalypse.MakeDemons
             Fighter newFighter = new Fighter(fighterData);
             newFighter.fighterName = prompt;
             newFighter.ownerName = ownerName;
-
-
-            if (createAIImage) createDemonSprite.GenerateFighterSprite(newFighter.fighterData, prompt);
-            else newFighter.fighterData.sprite = testSprite;
-
-            fighterShowObject.SetFighter(newFighter);
-            abilitiesShowContainer.SetFighter(newFighter);
-
+            
             SaveLoad.SaveToJson(newFighter);
+
+            Debug.Log("Now generate Fighter sprite");
+
+            if (createAIImage)
+            {
+                lastGeneratedFighter = newFighter;
+
+                createDemonSprite.OnSpriteCreated += ShowNewFighter;
+                
+                createDemonSprite.GenerateFighterSprite(newFighter.fighterData, ownerName, prompt);
+            }
+            else
+            {
+                newFighter.fighterData.sprite = testSprite;
+                lastGeneratedFighter = newFighter;
+
+                ShowNewFighter();
+            }
+        }
+
+        void ShowNewFighter()
+        {
+            fighterShowObject.SetFighter(lastGeneratedFighter);
+            abilitiesShowContainer.SetFighter(lastGeneratedFighter);
+
+            Debug.Log("Now show fighter");
+
+            // SaveLoad.SaveToJson(lastGeneratedFighter);
+
+            createDemonSprite.OnSpriteCreated -= ShowNewFighter;
         }
 
         void TestLoadFighter()
@@ -87,22 +119,26 @@ namespace SummonersApocalypse.MakeDemons
             List<Ability> abilities = new List<Ability>();
             string[] abilityBlocks = input.Split(new string[] { "\n\n" }, StringSplitOptions.RemoveEmptyEntries);
 
+            Debug.Log("Input string:\n" + input);
+
             foreach (string block in abilityBlocks)
             {
-                string[] lines = block.Split('\n');
+                string[] lines = block.Split(',');
 
                 string abilityName = "new Ability";
                 TargetType targetType = TargetType.Self; // Default value
-                SpecialEffect specialEffect = SpecialEffect.None; // Default value
+                StatusEffectType specialEffect = StatusEffectType.None; // Default value
                 int damage = 0;
                 int targetCount = 1;
 
                 print("Analyzing next ability");
-                print("AbilityString: " + block);
+                print("AbilityString: " + block);                
 
                 foreach (string line in lines)
                 {
-                    if(line.Contains("Ability:") || line.Contains("Ability"))
+                    Debug.Log("Line to analyze: " + line);
+
+                    if (line.Contains("Ability:") || line.Contains("Ability"))
                     {
                         abilityName = line.Split(':')[1].Trim();
 
@@ -119,7 +155,7 @@ namespace SummonersApocalypse.MakeDemons
                     else if (line.Contains("Special Effects:") || line.Contains("SpecialEffects:"))
                     {
                         string specialEffectStr = line.Split(':')[1].Trim();
-                        specialEffect = (SpecialEffect)Enum.Parse(typeof(SpecialEffect), specialEffectStr);
+                        specialEffect = (StatusEffectType)Enum.Parse(typeof(StatusEffectType), specialEffectStr);
 
                         print("SpecialEffectString: " + specialEffectStr);
                         print("SpecialEffect: " + specialEffect);
@@ -135,7 +171,7 @@ namespace SummonersApocalypse.MakeDemons
                     }
                 }
 
-                Ability ability = new Ability(new TargetType[] { targetType }, new SpecialEffect[] { specialEffect }, damage, targetCount, abilityName);
+                Ability ability = new Ability(new TargetType[] { targetType }, new StatusEffectType[] { specialEffect }, damage, targetCount, abilityName);
                 abilities.Add(ability);
             }
 
@@ -160,7 +196,7 @@ namespace SummonersApocalypse.MakeDemons
                 prompt += ", ";
             }
             prompt += "], SpecialEffects[";
-            foreach (SpecialEffect specialEffect in Enum.GetValues(typeof(SpecialEffect)))
+            foreach (StatusEffectType specialEffect in Enum.GetValues(typeof(StatusEffectType)))
             {
                 prompt += specialEffect.ToString();
 
@@ -193,3 +229,4 @@ namespace SummonersApocalypse.MakeDemons
          */
     }
 }
+

@@ -9,7 +9,7 @@ public enum TargetType
     All
 }
 
-public enum SpecialEffect
+public enum StatusEffectType
 {
     None,
     Stun,
@@ -19,18 +19,25 @@ public enum SpecialEffect
     Debuff
 }
 
+public class StatusEffect // TODO not used yet, cause fighters were generater before
+{
+    StatusEffectType type;
+
+    int effectValue;
+}
+
 [System.Serializable]
 public class Ability
 {
     public string abilityName;
 
     public TargetType[] targetTypes;
-    public SpecialEffect[] specialEffects;
+    public StatusEffectType[] specialEffects;
     public int damage;
 
     public int targetCount;
 
-    public Ability(TargetType[] targetTypes, SpecialEffect[] specialEffects, int damage, int targetCount, string abilityName)
+    public Ability(TargetType[] targetTypes, StatusEffectType[] specialEffects, int damage, int targetCount, string abilityName)
     {
         this.targetTypes = targetTypes;
         this.specialEffects = specialEffects;

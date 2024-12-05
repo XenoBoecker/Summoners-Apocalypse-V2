@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,7 +12,8 @@ public class Fighter
 
     public int team;
 
-    [SerializeField]public int health;
+    public int health; // renaming creates problems in ai generated fighter data, I should probably remove changing variables from the json files
+    List<StatusEffectType> currentStatusEffects = new List<StatusEffectType>();
 
     public bool isDead;
 
@@ -27,12 +29,22 @@ public class Fighter
 
     public void GetHitBy(Ability selectedAbility)
     {
+        ApplyStatusEffects(selectedAbility.specialEffects);
+
         TakeDamage(selectedAbility.damage);
+    }
+
+    private void ApplyStatusEffects(StatusEffectType[] specialEffects)
+    {
+        if (currentStatusEffects == null) currentStatusEffects = new List<StatusEffectType>();
+
+        currentStatusEffects.AddRange(specialEffects);
     }
 
     private void TakeDamage(int dmg)
     {
-        // Debug.Log(fighterName + " took " + dmg + " damage!");
+        Debug.Log(fighterName + " took " + dmg + " damage!");
+        
         health -= dmg;
 
         if (health > fighterData.maxHealth) health = fighterData.maxHealth;

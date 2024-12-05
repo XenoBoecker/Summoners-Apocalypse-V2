@@ -1,0 +1,60 @@
+{
+    "fighterData": {
+        "fighterID": 0,
+        "sprite": {
+            "instanceID": 0
+        },
+        "initiative": 25,
+        "maxHealth": 10,
+        "abilities": [
+            {
+                "abilityName": "Molten Burst",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    3
+                ],
+                "damage": 15,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Inferno Shield",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    4
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Lava Surge",
+                "targetTypes": [
+                    3
+                ],
+                "specialEffects": [
+                    5
+                ],
+                "damage": 10,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Volcanic Eruption",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    1
+                ],
+                "damage": 20,
+                "targetCount": 1
+            }
+        ]
+    },
+    "ownerName": "TestPlayer",
+    "fighterName": "Living Magma",
+    "team": 0,
+    "health": 10
+}

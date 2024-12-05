@@ -1,10 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MultiplayerSelectioManager;
 
 public class MultiplayerSelectioManager : MonoBehaviourPunCallbacks
 {
@@ -32,6 +29,7 @@ public class MultiplayerSelectioManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+        Debug.Log("OnPlayerPropertiesUpdate");
         if (changedProps.ContainsKey("PlayerSelectedDemons"))
         {
             OnPlayerDemonSelectionChanged(targetPlayer, changedProps);
@@ -40,7 +38,9 @@ public class MultiplayerSelectioManager : MonoBehaviourPunCallbacks
 
     private void OnPlayerDemonSelectionChanged(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        Fighter[] selectedFighters = (Fighter[])changedProps["PlayerSelectedDemons"];
+        Debug.Log("OnPlayerDemonSelectionChanged");
+
+        Fighter[] selectedFighters = Serialization.DeserializeFighters((byte[])changedProps["PlayerSelectedDemons"]).ToArray();
 
         int playerIndex = 0;
         foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
@@ -51,7 +51,7 @@ public class MultiplayerSelectioManager : MonoBehaviourPunCallbacks
                 continue;
             }
 
-            allSelectedFighters[playerIndex] = (Fighter[])changedProps["PlayerSelectedDemons"];
+            allSelectedFighters[playerIndex] = selectedFighters;
 
             break;
         }

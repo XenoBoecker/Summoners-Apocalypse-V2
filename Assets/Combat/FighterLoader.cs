@@ -63,7 +63,8 @@ public class FighterLoader
             {
                 if (PhotonNetwork.PlayerList.Length > 1) spawnTestPlayers = false;
 
-                List<Fighter> fighters = SaveLoad.LoadMyFighters(PhotonNetwork.PlayerList[i].NickName);
+                List<Fighter> fighters = Serialization.DeserializeFighters((byte[])PhotonNetwork.PlayerList[i].CustomProperties["PlayerSelectedDemons"]); ;
+                
                 foreach (Fighter fighter in fighters)
                 {
                     fighter.team = i;
@@ -105,11 +106,11 @@ public class FighterLoader
     {
         List<Ability> abilities = new List<Ability>();
         TargetType[] fireballTargetTypes = new TargetType[] { TargetType.Enemy };
-        SpecialEffect[] fireBallSpecialEffects = new SpecialEffect[] { SpecialEffect.None };
+        StatusEffectType[] fireBallSpecialEffects = new StatusEffectType[] { StatusEffectType.None };
         abilities.Add(new Ability(fireballTargetTypes, fireBallSpecialEffects, 20, 1, "Fireball"));
 
         TargetType[] healTargetTypes = new TargetType[] { TargetType.Self };
-        SpecialEffect[] healSpecialEffects = new SpecialEffect[] { SpecialEffect.None };
+        StatusEffectType[] healSpecialEffects = new StatusEffectType[] { StatusEffectType.None };
         abilities.Add(new Ability(healTargetTypes, healSpecialEffects, -10, 1, "HealSelf"));
 
         FighterData testFighter = new FighterData(50, abilities, 50, 0);

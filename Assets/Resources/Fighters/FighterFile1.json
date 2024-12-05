@@ -1,0 +1,59 @@
+{
+    "fighterData": {
+        "fighterID": 1,
+        "sprite": {
+            "instanceID": 0
+        },
+        "initiative": 25,
+        "maxHealth": 10,
+        "abilities": [
+            {
+                "abilityName": "Winged Leap",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Poisonous Tongue",
+                "targetTypes": [
+                    1
+                ],
+                "specialEffects": [
+                    2
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Sonic Croak",
+                "targetTypes": [
+                    3
+                ],
+                "specialEffects": [
+                    1
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Camouflage",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            }
+        ]
+    },
+    "fighterName": "Winged Frog",
+    "team": 0,
+    "health": 10
+}

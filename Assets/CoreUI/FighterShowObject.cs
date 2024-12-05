@@ -15,7 +15,8 @@ public class FighterShowObject : MonoBehaviour
     [SerializeField] Image isThisFightersTurnHighlightImage;
     [SerializeField] Image image;
     [SerializeField] TMP_Text nameText;
-    [SerializeField] Slider healthSlider;
+    [SerializeField] RectTransform healthSliderTransform;
+    [SerializeField] TMP_Text healthText;
 
     [SerializeField] Sprite emptySprite;
 
@@ -68,18 +69,19 @@ public class FighterShowObject : MonoBehaviour
             // print(fighter.fighterName + " health: " + fighter.health + ", max health: " + fighter.fighterData.maxHealth);
             // print("SliderValue: " + fighter.health / fighter.fighterData.maxHealth * healthSliderMaxValue);
 
-            healthSlider.GetComponent<RectTransform>().sizeDelta = new Vector2((float)fighter.health / fighter.fighterData.maxHealth * healthSliderMaxValue, healthSlider.GetComponent<RectTransform>().sizeDelta.y);
+            healthSliderTransform.sizeDelta = new Vector2((float)fighter.health / fighter.fighterData.maxHealth * healthSliderMaxValue, healthSliderTransform.sizeDelta.y);
+            healthText.text = fighter.health + " / " + fighter.fighterData.maxHealth;
 
         }
 
     }
-
+    
     void ShowEmpty()
     {
         image.sprite = emptySprite;
         nameText.text = "";
 
-        healthSlider.GetComponent<RectTransform>().sizeDelta = new Vector2(healthSliderMaxValue, healthSlider.GetComponent<RectTransform>().sizeDelta.y);
+        healthSliderTransform.sizeDelta = new Vector2(healthSliderMaxValue, healthSliderTransform.sizeDelta.y);
 
     }
 

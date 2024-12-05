@@ -2592,5 +2592,5 @@ MonoBehaviour:
   playerItemPrefab: {fileID: 3784589134310948096, guid: d673a521b3ecd284f8fa16538aea84b3, type: 3}
   playerItemParent: {fileID: 1321175895}
   playButton: {fileID: 1769319838}
-  gameSceneName: Combat
+  gameSceneName: DemonSelection
   testing: 0

@@ -1,0 +1,61 @@
+{
+    "fighterData": {
+        "fighterID": 6,
+        "sprite": {
+            "instanceID": 0
+        },
+        "initiative": 56,
+        "maxHealth": 50,
+        "abilities": [
+            {
+                "abilityName": "Laser Beam, TargetType",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Quack Attack, TargetType",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Feather Shield, TargetType",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            },
+            {
+                "abilityName": "Duckling Swarm, TargetType",
+                "targetTypes": [
+                    0
+                ],
+                "specialEffects": [
+                    0
+                ],
+                "damage": 0,
+                "targetCount": 1
+            }
+        ]
+    },
+    "ownerName": "TestPlayer",
+    "fighterName": " A cute fluffy duck with red laser eyes",
+    "team": 0,
+    "health": 50,
+    "isDead": false
+}
